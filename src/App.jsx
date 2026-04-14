@@ -3,26 +3,29 @@ import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, onSnapshot, addDoc, updateDoc, setDoc, doc, serverTimestamp, deleteDoc } from 'firebase/firestore';
 
-// Clean SVG Icons (Replacing lucide-react to avoid naming collisions and build errors)
+// --- Custom SVG Icons ---
+// Using custom SVGs avoids version conflicts with lucide-react and reduces bundle size
 const SvgIcon = ({ children, className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>{children}</svg>
 );
-const Trophy = (p) => <SvgIcon {...p}><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></SvgIcon>;
-const BarChart3 = (p) => <SvgIcon {...p}><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></SvgIcon>;
-const PlayCircle = (p) => <SvgIcon {...p}><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></SvgIcon>;
-const CheckCircle2 = (p) => <SvgIcon {...p}><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></SvgIcon>;
-const ArrowLeft = (p) => <SvgIcon {...p}><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></SvgIcon>;
-const Star = (p) => <SvgIcon {...p}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></SvgIcon>;
-const TrendingUp = (p) => <SvgIcon {...p}><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></SvgIcon>;
-const Presentation = (p) => <SvgIcon {...p}><path d="M2 3h20"/><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/><path d="m7 21 5-5 5 5"/></SvgIcon>;
-const Lightbulb = (p) => <SvgIcon {...p}><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></SvgIcon>;
-const Trash2 = (p) => <SvgIcon {...p}><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></SvgIcon>;
-const Plus = (p) => <SvgIcon {...p}><path d="M5 12h14"/><path d="M12 5v14"/></SvgIcon>;
-const Download = (p) => <SvgIcon {...p}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></SvgIcon>;
-const RefreshCw = (p) => <SvgIcon {...p}><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></SvgIcon>;
-const AlertTriangle = (p) => <SvgIcon {...p}><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></SvgIcon>;
-const Activity = (p) => <SvgIcon {...p}><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></SvgIcon>;
 
+const Trophy = (props) => <SvgIcon {...props}><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></SvgIcon>;
+const BarChart3 = (props) => <SvgIcon {...props}><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></SvgIcon>;
+const PlayCircle = (props) => <SvgIcon {...props}><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></SvgIcon>;
+const CheckCircle2 = (props) => <SvgIcon {...props}><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></SvgIcon>;
+const ArrowLeft = (props) => <SvgIcon {...props}><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></SvgIcon>;
+const Star = (props) => <SvgIcon {...props}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></SvgIcon>;
+const TrendingUp = (props) => <SvgIcon {...props}><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></SvgIcon>;
+const Presentation = (props) => <SvgIcon {...props}><path d="M2 3h20"/><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/><path d="m7 21 5-5 5 5"/></SvgIcon>;
+const Lightbulb = (props) => <SvgIcon {...props}><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></SvgIcon>;
+const Trash2 = (props) => <SvgIcon {...props}><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></SvgIcon>;
+const Plus = (props) => <SvgIcon {...props}><path d="M5 12h14"/><path d="M12 5v14"/></SvgIcon>;
+const Download = (props) => <SvgIcon {...props}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></SvgIcon>;
+const RefreshCw = (props) => <SvgIcon {...props}><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></SvgIcon>;
+const AlertTriangle = (props) => <SvgIcon {...props}><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></SvgIcon>;
+const Activity = (props) => <SvgIcon {...props}><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></SvgIcon>;
+
+// Map for dynamic icon rendering via criteria settings
 const IconMap = { Lightbulb, TrendingUp, CheckCircle2, Presentation, Star };
 
 // --- Firebase Initialization ---
@@ -41,7 +44,6 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const appId = 'my-company-pitch-app';
 
-// --- Constants ---
 const DEFAULT_CRITERIA = [
   { id: 'innovation', label: 'Innovation & Originality', iconName: 'Lightbulb' },
   { id: 'market', label: 'Market Potential', iconName: 'TrendingUp' },
@@ -531,7 +533,7 @@ export default function App() {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-slate-700/50 p-4 rounded-xl border border-slate-600">
                 <h4 className="font-semibold text-white mb-1">Export Results</h4>
-                <p className="text-sm text-slate-400 mb-4">Download all current scores and metrics as a CSV file to save your data offline.</p>
+                <p className="text-sm text-slate-400 mb-4">Download current scores as a CSV file.</p>
                 <button 
                   onClick={handleExportCSV}
                   disabled={leaderboard.length === 0}
@@ -542,7 +544,7 @@ export default function App() {
               </div>
               <div className="bg-slate-700/50 p-4 rounded-xl border border-slate-600">
                 <h4 className="font-semibold text-white mb-1">Start New Round</h4>
-                <p className="text-sm text-slate-400 mb-4">Clear all current teams, pitches, and votes. This action cannot be undone.</p>
+                <p className="text-sm text-slate-400 mb-4">Clear all current teams and votes.</p>
                 <button 
                   onClick={() => setShowResetModal(true)}
                   className="w-full flex items-center justify-center gap-2 py-2 bg-red-500/20 hover:bg-red-500/40 text-red-400 hover:text-red-300 font-medium rounded-lg transition-colors border border-red-500/50"
@@ -562,27 +564,11 @@ export default function App() {
                 </div>
                 <h3 className="text-xl font-bold text-slate-800">Clear All Data?</h3>
               </div>
-              <p className="text-slate-600 mb-6">
-                Are you sure you want to start a new session? This will <strong>permanently delete</strong> all current competitors and their associated votes. Make sure you have exported your data first!
-              </p>
+              <p className="text-slate-600 mb-6">Are you sure? This action is permanent.</p>
               <div className="flex gap-3">
-                <button 
-                  onClick={() => setShowResetModal(false)}
-                  disabled={isSubmitting}
-                  className="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl transition-colors disabled:opacity-50"
-                >
-                  Cancel
-                </button>
-                <button 
-                  onClick={handleResetSession}
-                  disabled={isSubmitting}
-                  className="flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white font-medium rounded-xl transition-colors disabled:opacity-50 flex items-center justify-center"
-                >
-                  {isSubmitting ? (
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  ) : (
-                    'Yes, Delete & Restart'
-                  )}
+                <button onClick={() => setShowResetModal(false)} disabled={isSubmitting} className="flex-1 py-2.5 bg-slate-100 text-slate-700 font-medium rounded-xl">Cancel</button>
+                <button onClick={handleResetSession} disabled={isSubmitting} className="flex-1 py-2.5 bg-red-600 text-white font-medium rounded-xl flex items-center justify-center">
+                  {isSubmitting ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div> : 'Yes, Reset'}
                 </button>
               </div>
             </div>
@@ -600,7 +586,7 @@ export default function App() {
             <button onClick={() => setView('host')} className="p-2 -ml-2 text-slate-400 hover:text-slate-600 rounded-lg">
               <ArrowLeft className="w-5 h-5" />
             </button>
-            <h1 className="text-xl font-bold text-slate-800">Final Results & Rankings</h1>
+            <h1 className="text-xl font-bold text-slate-800">Final Results</h1>
           </div>
         </header>
         <main className="max-w-4xl mx-auto px-4 mt-8">
@@ -608,7 +594,7 @@ export default function App() {
             {leaderboard.length === 0 ? (
               <div className="text-center p-12 bg-white rounded-2xl shadow-sm">
                 <Trophy className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-                <p className="text-slate-500 text-lg">No pitches have been scored yet.</p>
+                <p className="text-slate-500 text-lg">No pitches scored yet.</p>
               </div>
             ) : (
               leaderboard.map((comp, index) => (
@@ -619,7 +605,7 @@ export default function App() {
                     </div>
                     <div className="flex-1 text-center md:text-left">
                       <h2 className="text-2xl font-bold text-slate-800 mb-1">{comp.name}</h2>
-                      <p className="text-slate-500 text-sm">{comp.metrics.count} total votes recorded</p>
+                      <p className="text-slate-500 text-sm">{comp.metrics.count} total votes</p>
                     </div>
                     <div className="text-center bg-slate-50 rounded-xl p-4 w-full md:w-auto">
                       <p className="text-xs text-slate-500 font-medium uppercase tracking-wider mb-1">Overall Avg</p>
@@ -706,14 +692,14 @@ function AudienceView({ activeCompetitor, competitors, user, votes, onBack, crit
                <Activity className="w-10 h-10 text-indigo-500 animate-pulse" />
              </div>
              <h2 className="text-2xl font-bold text-slate-800 mb-2">Waiting for pitch...</h2>
-             <p className="text-slate-500 mb-8">The host will open voting when a presentation begins. Keep this screen open.</p>
+             <p className="text-slate-500 mb-8">Connected to Room: {roomId}</p>
              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 text-left">
                <h3 className="font-bold text-slate-700 text-sm uppercase tracking-wider mb-4 flex items-center gap-2">
-                 <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
-                 Connected to Room: {roomId}
+                 <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                 Current Status
                </h3>
                {competitors.length === 0 ? (
-                 <p className="text-sm text-slate-500 italic text-center py-4">Waiting for host to add teams...</p>
+                 <p className="text-sm text-slate-500 italic text-center py-4">Waiting for host...</p>
                ) : (
                  <ul className="space-y-3 divide-y divide-slate-100">
                    {competitors.map(c => (
@@ -736,15 +722,13 @@ function AudienceView({ activeCompetitor, competitors, user, votes, onBack, crit
                <CheckCircle2 className="w-10 h-10 text-emerald-600" />
              </div>
              <h2 className="text-2xl font-bold text-slate-800 mb-2">Scores Submitted!</h2>
-             <p className="text-slate-500 mb-8">Your feedback for <strong className="text-slate-800">{activeCompetitor.name}</strong> has been recorded. Wait here for the next pitch.</p>
-             <button onClick={() => window.location.reload()} className="text-sm text-indigo-600 font-medium hover:underline">
-               Need to re-sync? Tap here
-             </button>
+             <p className="text-slate-500 mb-8">Feedback for <strong>{activeCompetitor.name}</strong> recorded.</p>
+             <button onClick={() => window.location.reload()} className="text-sm text-indigo-600 font-medium hover:underline">Refresh</button>
            </div>
         ) : (
           <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
             <div className="bg-slate-50 p-6 border-b border-slate-100 text-center">
-              <span className="inline-block px-3 py-1 bg-red-100 text-red-700 text-xs font-bold uppercase tracking-wider rounded-full mb-3 animate-pulse">Live Voting Open</span>
+              <span className="inline-block px-3 py-1 bg-red-100 text-red-700 text-xs font-bold uppercase rounded-full mb-3 animate-pulse">Live Voting</span>
               <h2 className="text-3xl font-black text-slate-800">{activeCompetitor.name}</h2>
             </div>
             <div className="p-6 space-y-8">
@@ -769,25 +753,13 @@ function AudienceView({ activeCompetitor, competitors, user, votes, onBack, crit
                         onChange={(e) => handleScoreChange(c.id, e.target.value)}
                         className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                       />
-                      <div className="flex justify-between text-xs text-slate-400 mt-2 font-medium px-1">
-                        <span>1 - Poor</span>
-                        <span>10 - Excellent</span>
-                      </div>
                     </div>
                   </div>
                 )
               })}
               <div className="pt-4 border-t border-slate-100">
-                <button
-                  onClick={submitVote}
-                  disabled={isSubmitting}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-200 transition-all active:scale-95 disabled:opacity-70 disabled:active:scale-100 flex justify-center items-center gap-2"
-                >
-                  {isSubmitting ? (
-                     <div className="w-6 h-6 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
-                  ) : (
-                    <>Submit Scores</>
-                  )}
+                <button onClick={submitVote} disabled={isSubmitting} className="w-full bg-indigo-600 text-white font-bold py-4 rounded-xl shadow-lg disabled:opacity-70">
+                  {isSubmitting ? <div className="w-6 h-6 border-3 border-white border-t-transparent rounded-full animate-spin"></div> : 'Submit Scores'}
                 </button>
               </div>
             </div>
