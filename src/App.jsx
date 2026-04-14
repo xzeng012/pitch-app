@@ -3,7 +3,7 @@ import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, onSnapshot, addDoc, updateDoc, setDoc, doc, serverTimestamp, deleteDoc } from 'firebase/firestore';
 
-// Replace Lucide-react import with inline SVGs to avoid version mismatch errors
+// Clean SVG Icons (Replacing lucide-react to avoid naming collisions and version errors)
 const SvgIcon = ({ children, className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>{children}</svg>
 );
@@ -24,7 +24,6 @@ const RefreshCw = (p) => <SvgIcon {...p}><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 
 const AlertTriangle = (p) => <SvgIcon {...p}><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></SvgIcon>;
 const Activity = (p) => <SvgIcon {...p}><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></SvgIcon>;
 
-// Create a clean map for our dynamic icons instead of a wildcard import
 const IconMap = { Lightbulb, TrendingUp, CheckCircle2, Presentation, Star };
 
 // --- Firebase Initialization ---
@@ -38,7 +37,6 @@ const firebaseConfig = {
   measurementId: "G-YGGLWVKTNN"
 };
 
-// Prevent Firebase from initializing twice during Vite's hot-reloads
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -83,7 +81,6 @@ export default function App() {
   useEffect(() => {
     if (!user || !roomId) return;
 
-    // Use standard static collection names and filter by roomId in memory to satisfy strict permission rules
     const compsRef = collection(db, 'artifacts', appId, 'public', 'data', 'competitors');
     const unsubComps = onSnapshot(compsRef, (snap) => {
       const roomComps = snap.docs
@@ -268,7 +265,6 @@ export default function App() {
             <p className="text-indigo-100">Real-time judging and scoring</p>
           </div>
           <div className="p-8 space-y-6">
-            
             <div className="space-y-3">
               <label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Join a Session</label>
               <div className="flex gap-2">
@@ -288,13 +284,11 @@ export default function App() {
                 </button>
               </div>
             </div>
-
             <div className="relative flex items-center py-2">
               <div className="flex-grow border-t border-slate-200"></div>
               <span className="flex-shrink-0 mx-4 text-slate-400 text-sm font-medium">OR</span>
               <div className="flex-grow border-t border-slate-200"></div>
             </div>
-
             <button 
               onClick={() => { 
                 const newRoom = Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -348,9 +342,7 @@ export default function App() {
             </button>
           </div>
         </header>
-
         <main className="max-w-4xl mx-auto px-4 mt-8 space-y-8">
-          
           {activeCompetitor ? (
             <div className="bg-indigo-600 rounded-2xl shadow-lg p-6 text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 p-8 opacity-10">
@@ -362,7 +354,6 @@ export default function App() {
                   Live Pitch
                 </div>
                 <h2 className="text-3xl font-bold mb-6">{activeCompetitor.name}</h2>
-                
                 {(() => {
                   const metrics = calculateMetrics(activeCompetitor.id);
                   return (
@@ -388,7 +379,6 @@ export default function App() {
                            </div>
                         </div>
                       </div>
-                      
                       <button 
                         onClick={() => handleSetStatus(activeCompetitor.id, 'finished')}
                         className="w-full py-3 bg-red-500 hover:bg-red-600 text-white font-bold rounded-xl shadow-sm transition-colors"
@@ -407,7 +397,6 @@ export default function App() {
               <p className="text-sm">Start a pitch from the list below to begin collecting live votes.</p>
             </div>
           )}
-
           <div className="grid md:grid-cols-3 gap-8">
             <div className="md:col-span-1 flex flex-col gap-8">
               <div className="space-y-4">
@@ -430,7 +419,6 @@ export default function App() {
                   </button>
                 </form>
               </div>
-
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <h3 className="font-bold text-slate-800 text-lg">Scoring Criteria</h3>
@@ -493,7 +481,6 @@ export default function App() {
                 </div>
               </div>
             </div>
-
             <div className="md:col-span-2 space-y-4">
               <h3 className="font-bold text-slate-800 text-lg">Up Next / Completed</h3>
               <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden divide-y divide-slate-100">
@@ -538,7 +525,6 @@ export default function App() {
               </div>
             </div>
           </div>
-
           <div className="bg-slate-800 rounded-2xl p-6 text-slate-200 mt-8 mb-8">
             <h3 className="font-bold text-white text-lg mb-4 flex items-center gap-2">
               <RefreshCw className="w-5 h-5" /> Session & Data Management
@@ -568,7 +554,6 @@ export default function App() {
             </div>
           </div>
         </main>
-
         {showResetModal && (
           <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl animate-in fade-in zoom-in duration-200">
@@ -619,7 +604,6 @@ export default function App() {
             <h1 className="text-xl font-bold text-slate-800">Final Results & Rankings</h1>
           </div>
         </header>
-
         <main className="max-w-4xl mx-auto px-4 mt-8">
           <div className="space-y-4">
             {leaderboard.length === 0 ? (
@@ -631,22 +615,18 @@ export default function App() {
               leaderboard.map((comp, index) => (
                 <div key={comp.id} className={`bg-white rounded-2xl shadow-sm border overflow-hidden ${index === 0 ? 'border-amber-300 shadow-amber-100/50 shadow-lg' : 'border-slate-100'}`}>
                   <div className={`p-6 flex flex-col md:flex-row items-center gap-6 ${index === 0 ? 'bg-amber-50/30' : ''}`}>
-                    
                     <div className="flex items-center justify-center w-12 h-12 rounded-full font-black text-xl shrink-0 bg-slate-100 text-slate-400">
                       {index === 0 ? <Trophy className="w-6 h-6 text-amber-500" /> : `#${index + 1}`}
                     </div>
-                    
                     <div className="flex-1 text-center md:text-left">
                       <h2 className="text-2xl font-bold text-slate-800 mb-1">{comp.name}</h2>
                       <p className="text-slate-500 text-sm">{comp.metrics.count} total votes recorded</p>
                     </div>
-                    
                     <div className="text-center bg-slate-50 rounded-xl p-4 w-full md:w-auto">
                       <p className="text-xs text-slate-500 font-medium uppercase tracking-wider mb-1">Overall Avg</p>
                       <p className="text-4xl font-black text-indigo-600">{comp.metrics.overallAverage}</p>
                     </div>
                   </div>
-
                   <div className="bg-slate-50 px-6 py-4 border-t border-slate-100 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                     {criteria.map(c => {
                       const Icon = IconMap[c.iconName] || Star;
@@ -695,7 +675,6 @@ function AudienceView({ activeCompetitor, competitors, user, votes, onBack, crit
   const submitVote = async () => {
     if (!activeCompetitor || !user || isSubmitting || !roomId) return;
     setIsSubmitting(true);
-    
     try {
       await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'votes'), {
         competitorId: activeCompetitor.id,
@@ -721,7 +700,6 @@ function AudienceView({ activeCompetitor, competitors, user, votes, onBack, crit
           <p className="text-indigo-200 text-xs">Audience Mode</p>
         </div>
       </header>
-
       <main className="flex-1 flex flex-col items-center justify-center p-4">
         {!activeCompetitor ? (
            <div className="text-center w-full max-w-md">
@@ -730,14 +708,11 @@ function AudienceView({ activeCompetitor, competitors, user, votes, onBack, crit
              </div>
              <h2 className="text-2xl font-bold text-slate-800 mb-2">Waiting for pitch...</h2>
              <p className="text-slate-500 mb-8">The host will open voting when a presentation begins. Keep this screen open.</p>
-             
-             {/* Live Connection Dashboard */}
              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 text-left">
                <h3 className="font-bold text-slate-700 text-sm uppercase tracking-wider mb-4 flex items-center gap-2">
                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
                  Connected to Room: {roomId}
                </h3>
-               
                {competitors.length === 0 ? (
                  <p className="text-sm text-slate-500 italic text-center py-4">Waiting for host to add teams...</p>
                ) : (
@@ -763,7 +738,6 @@ function AudienceView({ activeCompetitor, competitors, user, votes, onBack, crit
              </div>
              <h2 className="text-2xl font-bold text-slate-800 mb-2">Scores Submitted!</h2>
              <p className="text-slate-500 mb-8">Your feedback for <strong className="text-slate-800">{activeCompetitor.name}</strong> has been recorded. Wait here for the next pitch.</p>
-
              <button onClick={() => window.location.reload()} className="text-sm text-indigo-600 font-medium hover:underline">
                Need to re-sync? Tap here
              </button>
@@ -774,7 +748,6 @@ function AudienceView({ activeCompetitor, competitors, user, votes, onBack, crit
               <span className="inline-block px-3 py-1 bg-red-100 text-red-700 text-xs font-bold uppercase tracking-wider rounded-full mb-3 animate-pulse">Live Voting Open</span>
               <h2 className="text-3xl font-black text-slate-800">{activeCompetitor.name}</h2>
             </div>
-            
             <div className="p-6 space-y-8">
               {criteria.map(c => {
                 const Icon = IconMap[c.iconName] || Star;
@@ -787,7 +760,6 @@ function AudienceView({ activeCompetitor, competitors, user, votes, onBack, crit
                       </div>
                       <span className="text-2xl font-black text-indigo-600 w-8 text-right">{scores[c.id] || 5}</span>
                     </div>
-                    
                     <div className="relative pt-1">
                       <input
                         type="range"
@@ -806,7 +778,6 @@ function AudienceView({ activeCompetitor, competitors, user, votes, onBack, crit
                   </div>
                 )
               })}
-
               <div className="pt-4 border-t border-slate-100">
                 <button
                   onClick={submitVote}
