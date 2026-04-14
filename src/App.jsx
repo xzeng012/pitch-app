@@ -3,8 +3,8 @@ import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, onSnapshot, addDoc, updateDoc, setDoc, doc, serverTimestamp, deleteDoc } from 'firebase/firestore';
 
+// Deployment Version: 1.0.1 - Triggering Vercel Build
 // --- Custom SVG Icons ---
-// Using custom SVGs avoids version conflicts with lucide-react and reduces bundle size
 const SvgIcon = ({ children, className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>{children}</svg>
 );
@@ -25,7 +25,6 @@ const RefreshCw = (props) => <SvgIcon {...props}><path d="M3 12a9 9 0 1 0 9-9 9.
 const AlertTriangle = (props) => <SvgIcon {...props}><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></SvgIcon>;
 const Activity = (props) => <SvgIcon {...props}><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></SvgIcon>;
 
-// Map for dynamic icon rendering via criteria settings
 const IconMap = { Lightbulb, TrendingUp, CheckCircle2, Presentation, Star };
 
 // --- Firebase Initialization ---
@@ -605,7 +604,7 @@ export default function App() {
                     </div>
                     <div className="flex-1 text-center md:text-left">
                       <h2 className="text-2xl font-bold text-slate-800 mb-1">{comp.name}</h2>
-                      <p className="text-slate-500 text-sm">{comp.metrics.count} total votes</p>
+                      <p className="text-slate-500 text-sm">{comp.metrics.count} total votes recorded</p>
                     </div>
                     <div className="text-center bg-slate-50 rounded-xl p-4 w-full md:w-auto">
                       <p className="text-xs text-slate-500 font-medium uppercase tracking-wider mb-1">Overall Avg</p>
