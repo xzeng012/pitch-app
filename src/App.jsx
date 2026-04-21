@@ -265,25 +265,35 @@ export default function App() {
             <p className="text-indigo-100">Real-time judging and scoring</p>
           </div>
           <div className="p-8 space-y-6">
-            <div className="space-y-3">
-              <label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Join a Session</label>
-              <div className="flex gap-2">
+          <div className="space-y-3">
+              <label className="text-sm font-bold text-slate-700 uppercase tracking-wider">Join or Resume Session</label>
+              <div className="space-y-3">
                 <input 
                   type="text" 
                   placeholder="Enter Room Code" 
                   value={roomInput}
                   onChange={(e) => setRoomInput(e.target.value.toUpperCase())}
-                  className="flex-1 px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono text-lg"
+                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono text-lg text-center tracking-widest"
                 />
-                <button 
-                  disabled={!roomInput.trim()}
-                  onClick={() => { setRoomId(roomInput.trim()); setView('audience'); }}
-                  className="px-6 bg-slate-800 hover:bg-slate-900 disabled:opacity-50 text-white font-bold rounded-xl transition-colors"
-                >
-                  Join
-                </button>
+                <div className="flex gap-2">
+                  <button 
+                    disabled={!roomInput.trim()}
+                    onClick={() => { setRoomId(roomInput.trim()); setView('audience'); }}
+                    className="flex-1 py-3 bg-slate-800 hover:bg-slate-900 disabled:opacity-50 text-white font-bold rounded-xl transition-colors"
+                  >
+                    Join as Audience
+                  </button>
+                  <button 
+                    disabled={!roomInput.trim()}
+                    onClick={() => { setRoomId(roomInput.trim()); setView('host'); }}
+                    className="flex-1 py-3 bg-indigo-100 hover:bg-indigo-200 disabled:opacity-50 text-indigo-800 font-bold rounded-xl transition-colors"
+                  >
+                    Resume as Host
+                  </button>
+                </div>
               </div>
             </div>
+        
             <div className="relative flex items-center py-2">
               <div className="flex-grow border-t border-slate-200"></div>
               <span className="flex-shrink-0 mx-4 text-slate-400 text-sm font-medium">OR</span>
