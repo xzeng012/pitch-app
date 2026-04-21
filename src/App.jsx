@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, onSnapshot, addDoc, updateDoc, setDoc, doc, serverTimestamp, deleteDoc } from 'firebase/firestore';
+import { Analytics } from '@vercel/analytics/react';
 
 // Deployment Version: 1.0.1 - Triggering Vercel Build
 // --- Custom SVG Icons ---
@@ -257,7 +258,9 @@ export default function App() {
 
   if (view === 'landing') {
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6">
+      <>
+        <Analytics />
+        <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6">
         <div className="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="bg-indigo-600 p-8 text-center text-white">
             <Trophy className="w-16 h-16 mx-auto mb-4 opacity-90" />
@@ -303,12 +306,15 @@ export default function App() {
           </div>
         </div>
       </div>
+      </>
     );
   }
 
   if (view === 'audience') {
     return (
-      <AudienceView 
+      <>
+        <Analytics />
+        <AudienceView 
         activeCompetitor={activeCompetitor} 
         competitors={competitors}
         user={user} 
@@ -317,12 +323,15 @@ export default function App() {
         roomId={roomId}
         onBack={() => setView('landing')} 
       />
+      </>
     );
   }
 
   if (view === 'host') {
     return (
-      <div className="min-h-screen bg-slate-50 pb-20">
+      <>
+        <Analytics />
+        <div className="min-h-screen bg-slate-50 pb-20">
         <header className="bg-white border-b sticky top-0 z-10">
           <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -574,12 +583,15 @@ export default function App() {
           </div>
         )}
       </div>
+      </>
     );
   }
 
   if (view === 'leaderboard') {
     return (
-      <div className="min-h-screen bg-slate-50 pb-20">
+      <>
+        <Analytics />
+        <div className="min-h-screen bg-slate-50 pb-20">
         <header className="bg-white border-b sticky top-0 z-10">
           <div className="max-w-4xl mx-auto px-4 h-16 flex items-center gap-3">
             <button onClick={() => setView('host')} className="p-2 -ml-2 text-slate-400 hover:text-slate-600 rounded-lg">
@@ -631,6 +643,7 @@ export default function App() {
           </div>
         </main>
       </div>
+      </>
     );
   }
 
