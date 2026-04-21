@@ -261,7 +261,7 @@ export default function App() {
         <div className="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="bg-indigo-600 p-8 text-center text-white">
             <Trophy className="w-16 h-16 mx-auto mb-4 opacity-90" />
-            <h1 className="text-3xl font-bold mb-2">Pitch Feedback Live</h1>
+            <h1 className="text-3xl font-bold mb-2">EchoBoard</h1>
             <p className="text-indigo-100">Real-time judging and scoring</p>
           </div>
           <div className="p-8 space-y-6">
